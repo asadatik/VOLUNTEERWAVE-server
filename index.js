@@ -57,6 +57,19 @@ async function run() {
       const result = await PostCollection.findOne(query)
       res.send(result)
     })
+    
+    // get 6 data by MongoDB sort method//
+    app.get('/six', async (req, res) => {
+      const cursor =  PostCollection.find().sort({deadline: 1}).limit(6);
+       const result =await cursor.toArray() ;
+      res.send(result) ; 
+    })
+        
+
+
+
+
+
 
 
   // Second Collection
