@@ -65,15 +65,27 @@ async function run() {
       res.send(result) ; 
     })
         
+      // Filter by Email ( Organiger  )
+    app.get("/managepost/:email", async (req, res) => {
+      console.log(req.params.email);
+      const result = await PostCollection.find({ user_email: req.params.email }).toArray();
+      res.send(result) 
+    })
+    // delete Oparation
+
+    app.delete("/AddPost/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await PostCollection.deleteOne(query);
+      res.send(result);
+    });
 
 
 
 
 
-
-
-  // Second Collection
-     // Save a bid data in db
+  // Second Collection (   Request     )
+    
      app.post('/Request', async (req, res) => {
       const bidData = req.body
       const result = await RequestedCollection.insertOne(bidData)
