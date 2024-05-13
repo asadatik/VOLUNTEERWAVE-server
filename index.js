@@ -80,6 +80,34 @@ async function run() {
       res.send(result);
     });
 
+    // Updated Oparetion
+
+    app.put("/AddPost/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updateSpot = {
+        $set: {
+          post_title: req.body.post_title,
+          user_email: req.body.user_email,
+          user_name: req.body.user_name,
+          Location: req.body.Location,
+          deadline: req.body.deadline,
+          category: req.body.category,
+          volunteers: req.body.volunteers,
+          description: req.body.description,
+          Thumbnail: req.body.Thumbnail  
+        },
+      };
+      const result = await PostCollection.updateOne(
+        query,
+        updateSpot,
+        options
+      );
+      res.send(result);
+      console.log(id, query, result);
+    });
+
 
 
 
