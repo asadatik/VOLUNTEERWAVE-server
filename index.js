@@ -33,7 +33,7 @@ async function run() {
   try {
     // collections
     const PostCollection = client.db('Volunteers').collection('post')
-
+    const RequestedCollection = client.db('Volunteers').collection('Request')
 
 
  // Save a job data in db
@@ -59,7 +59,14 @@ async function run() {
     })
 
 
-
+  // Second Collection
+     // Save a bid data in db
+     app.post('/Request', async (req, res) => {
+      const bidData = req.body
+      const result = await RequestedCollection.insertOne(bidData)
+      res.send(result); 
+    })
+   
 
 
     // await client.db("admin").command({ ping: 1 });
