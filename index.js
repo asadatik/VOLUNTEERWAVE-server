@@ -31,7 +31,7 @@ app.use (express.json());
 
 
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASs}@cluster0.ldjypij.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ldjypij.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -132,8 +132,44 @@ async function run() {
       const result = await RequestedCollection.insertOne(bidData)
       res.send(result); 
     })
-   
+         // Get all Reuest data from db
+        // app.get('/req', async (req, res) => {
+        //   const result = await RequestedCollection.find().toArray()
+    
+        //   res.send(result)
+        // })
+       
+         // Filter by Email ( Volunteer  )
+    app.get("/volunteer/:email", async (req, res) => {
+      console.log(req.params.email);
+      const result = await RequestedCollection.find({ volunteerEmail : req.params.email }).toArray();
+      res.send(result) 
+    })
 
+    // Cancel request
+    app.delete("/Request/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await RequestedCollection.deleteOne(query);
+      res.send(result);
+    });
+//  update Volunteer Number
+    app.patch('/number/:id', async (req, res) => {
+   
+      const id = req.params.id
+      const query = { _id: new ObjectId(id) };
+      // const Vol = parseInt(req.body.volunteers)
+      const updateDoc = {
+        $inc: { volunteers : -1 } 
+      };          
+      const result = await PostCollection.updateOne(query, updateDoc);
+      
+      res.send(result);
+
+    });
+    
+    
+   
 
     // await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
