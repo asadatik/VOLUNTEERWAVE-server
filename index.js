@@ -5,19 +5,32 @@ require('dotenv').config()
 const port = process.env.PORT || 5000
 const app = express()
 
+//mileWars//
+app.use(cors()) ;
+app.use (express.json());
 
 // middle
-const corsOptions = {
-    origin: [
-      'http://localhost:5173',
-      'http://localhost:5174',
+// const corsOptions = {
+//     origin: [
+//       'http://localhost:5173',
+//       'http://localhost:5174',
      
-    ],
-    credentials: true,
-    optionSuccessStatus: 200,
-  }
-  app.use(cors(corsOptions))
-  app.use(express.json())
+//     ],
+//     credentials: true,
+//     optionSuccessStatus: 200,
+//   }
+//   app.use(cors(corsOptions))
+//   app.use(express.json())
+
+
+
+
+
+
+
+
+
+
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASs}@cluster0.ldjypij.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
