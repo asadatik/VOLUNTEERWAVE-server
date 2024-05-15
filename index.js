@@ -9,18 +9,7 @@ const app = express()
 app.use(cors()) ;
 app.use (express.json());
 
-// middle
-// const corsOptions = {
-//     origin: [
-//       'http://localhost:5173',
-//       'http://localhost:5174',
-     
-//     ],
-//     credentials: true,
-//     optionSuccessStatus: 200,
-//   }
-//   app.use(cors(corsOptions))
-//   app.use(express.json())
+
 
 
 
@@ -132,12 +121,7 @@ async function run() {
       const result = await RequestedCollection.insertOne(bidData)
       res.send(result); 
     })
-         // Get all Reuest data from db
-        // app.get('/req', async (req, res) => {
-        //   const result = await RequestedCollection.find().toArray()
-    
-        //   res.send(result)
-        // })
+        
        
          // Filter by Email ( Volunteer  )
     app.get("/volunteer/:email", async (req, res) => {
@@ -158,7 +142,7 @@ async function run() {
    
       const id = req.params.id
       const query = { _id: new ObjectId(id) };
-      // const Vol = parseInt(req.body.volunteers)
+      
       const updateDoc = {
         $inc: { volunteers : -1 } 
       };          
